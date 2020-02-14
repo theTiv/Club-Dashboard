@@ -6,10 +6,10 @@
           <h2 class="workspace__title">My Favourites</h2>
         </header>
         <section class="workspace__content">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <Card direction="right" />
+          <Card direction="right" />
+          <Card direction="right" />
+          <Card direction="left" />
         </section>
       </div>
       <div class="workspace__sections">
@@ -50,13 +50,12 @@ export default {
   text-align: left;
 }
 
-/* .workspace__content {
-  display: flex;
-} */
 .workspace__content {
   display: grid;
    width: 100%;
-  grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+grid-template-columns: repeat(4, 1fr);
+    align-content: space-around;
+  justify-content: space-between;
   grid-gap: 10px;
   color: #444;
   position: relative;
