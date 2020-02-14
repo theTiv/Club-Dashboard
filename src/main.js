@@ -24,12 +24,12 @@ new Vue({
         { title: 'E-learning', icon: 'graduation', description: 'Lorem Ipsum', link: '/'},
       ],
     notifications: [
-    { title: 'article 1', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
-    { title: 'article 2', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
-    { title: 'article 3', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
-    { title: 'article 4', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
-    { title: 'article 5', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
-    { title: 'article 6', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },    
+        { title: 'article 1', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
+        { title: 'article 2', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
+        { title: 'article 3', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
+        { title: 'article 4', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
+        { title: 'article 5', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' },
+        { title: 'article 6', date: '24-01-20', time:'7:01 pm', description: 'The deadline for submitting expenses is this Friday 11th October.' }    
 ],
 }
 }).$mount('#app')

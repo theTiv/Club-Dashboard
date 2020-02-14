@@ -43,7 +43,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="less">
+@import "../../less/vars.less";
+@import "../../less/mixins.less";
+
 h3 {
   margin: 40px 0 0;
 }
@@ -75,11 +78,11 @@ a {
 }
 
 .card.right {
-    transition: 0.5s;
-      z-index: 2;
+  transition: 0.5s;
+  z-index: 2;
 }
 
-.card.right:hover  {
+.card.right:hover {
   z-index: 2;
   transition: 0.5s;
 }
@@ -90,7 +93,7 @@ a {
   right: 0;
   width: 180px;
   z-index: 1;
-    transition: 0.5s;
+  transition: 0.5s;
 }
 
 .card.left:hover {
@@ -98,7 +101,7 @@ a {
   top: 0;
   right: 0;
   transition: 0.5s;
-        z-index: 2;
+  z-index: 2;
 }
 
 .card:hover {
@@ -146,7 +149,7 @@ a {
 .card__title {
   align-self: flex-start;
   margin-bottom: 6px;
-  font-size: 16px;
+  .rem-px(font-size, 16);
   font-weight: 600;
   color: rgba(0, 0, 0, 0.6);
 }
