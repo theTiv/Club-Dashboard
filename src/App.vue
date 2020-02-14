@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <header class="header">
-        <h2 class="site-title">GAA</h2>
+      <h2 class="site-title">GAA</h2>
     </header>
     <Workspace class="workspace" />
     <Notifications class="notifications" />
@@ -9,16 +9,16 @@
 </template>
 
 <script>
-import Workspace from './components/Workspace/Workspace'
-import Notifications from './components/Notifications/Notifications'
+import Workspace from "./components/Workspace/Workspace";
+import Notifications from "./components/Notifications/Notifications";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Workspace,
     Notifications
   }
-}
+};
 </script>
 
 <style>
@@ -36,19 +36,20 @@ body {
 
 .header {
   grid-area: header;
-  color: #005E82;
+  color: #005e82;
 }
 .workspace {
   grid-area: main;
-  background-color: #005E82;
+  background-color: #005e82;
   color: white;
+  padding-right: 20px;
 }
 .notifications {
   grid-area: sidebar;
-  background-color: #3485AB;
+  background-color: #3485ab;
   color: white;
   padding-left: 20px;
-  padding-right: 20px; 
+  padding-right: 20px;
 }
 
 .container {
@@ -56,9 +57,8 @@ body {
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto 1fr;
-  grid-template-areas: 
+  grid-template-areas:
     "header header header"
     "main main sidebar";
 }
-
 </style>
