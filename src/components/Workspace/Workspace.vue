@@ -37,7 +37,7 @@ export default {
   },
   props: {
     direction: String
-  },
+  }
 };
 </script>
 
@@ -52,14 +52,12 @@ export default {
 
 .workspace__content {
   display: grid;
-   width: 100%;
-grid-template-columns: repeat(4, 1fr);
-    align-content: space-around;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  align-content: space-around;
   justify-content: space-between;
   grid-gap: 10px;
   color: #444;
   position: relative;
 }
-
-
 </style>
