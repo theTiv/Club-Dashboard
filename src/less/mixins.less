@@ -1,0 +1,11 @@
+@fontSizeStandard: 16;
+
+.rem-px(@property; @sizeValue) {
+
+@pxValue: @sizeValue;
+@remValue: (@sizeValue / @fontSizeStandard);
+@{property}: ~"@{remValue}rem";
+@{property}: ~"@{pxValue}px";
+
+}
+
