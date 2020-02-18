@@ -6,10 +6,6 @@
           <h2 class="workspace__title">My Favourites</h2>
         </header>
         <section class="workspace__content">
-          <Card direction="right" />
-          <Card direction="right" />
-          <Card direction="right" />
-          <Card direction="left" />
         </section>
       </div>
       <div class="workspace__sections">
@@ -17,10 +13,8 @@
           <h2 class="workspace__header">Workspace</h2>
         </header>
         <section class="workspace__content">
-          <Card direction="right" />
-          <Card direction="right" />
-          <Card direction="right" />
-          <Card direction="left" />
+          <!-- <Card v-for="section in sections" :key="section"></Card> -->
+          <Card />
         </section>
       </div>
     </div>
@@ -51,13 +45,19 @@ export default {
 }
 
 .workspace__content {
-  display: grid;
+  /* display: grid;
   width: 100%;
   grid-template-columns: repeat(4, 1fr);
   align-content: space-around;
   justify-content: space-between;
   grid-gap: 10px;
   color: #444;
-  position: relative;
+  position: relative; */
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+   position: relative;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 </style>

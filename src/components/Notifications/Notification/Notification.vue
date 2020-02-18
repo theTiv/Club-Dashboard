@@ -1,11 +1,11 @@
 <template>
-  <div class="notification__container">
+  <div class="notification__container" :class="{ active: isActive }" >
     <div class="notification__details-container">
         <Date />
-        <Close />
+        <Close @NotificationMinimized="isActive = $event"/>
     </div>
     <div class="notification__article">
-        The deadline for submitting expenses is this Friday 11th October.
+        The deadline for submitting expenses is this Friday 11th October. {{isActive}}
     </div>
   </div>
 </template>
@@ -18,8 +18,13 @@ export default {
   components: {
     Date,
     Close
+  },
+  data() {
+    return {
+        isActive: false
+    }
   }
-};
+}
 </script>
 
 <style>
@@ -33,6 +38,15 @@ export default {
   color: black;
   padding: 16px;
   margin-bottom: 20px;
+  overflow: hidden;
+    transition: 0.5s;
+}
+
+.active {
+  height: 70px;
+  transition: 0.5s;
+  color:rgba(255,255,255, 0.4);
+  background-color: #ccc;
 }
 
 .notification__details-container {

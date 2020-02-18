@@ -63,50 +63,28 @@ a {
 }
 
 .card {
+  // animation: animate 5s;
   box-sizing: border-box;
   height: 180px;
   width: 180px;
   min-width: 180px;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 0 10px 0 rgba(186, 186, 186, 0.25);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
   color: black;
   display: flex;
   flex-direction: column;
   padding: 22px;
   margin-right: 10px;
-}
-
-.card.right {
   transition: 0.5s;
-  z-index: 2;
-}
-
-.card.right:hover {
-  z-index: 2;
-  transition: 0.5s;
-}
-
-.card.left {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 180px;
   z-index: 1;
-  transition: 0.5s;
-}
-
-.card.left:hover {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transition: 0.5s;
-  z-index: 2;
 }
 
 .card:hover {
   width: 390px;
   transition: 0.5s;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 .card .card__favourite {
@@ -171,12 +149,17 @@ a {
   }
 }
 
-@keyframes fadeout {
-  from {
-    opacity: 1;
-  }
-  to {
+@keyframes animate {
+  0% {
     opacity: 0;
+    z-index: 2;
+  }
+  99% {
+    opacity: 1;
+    z-index: 2;
+  }
+  100% {
+    z-index: 1;
   }
 }
 </style>
