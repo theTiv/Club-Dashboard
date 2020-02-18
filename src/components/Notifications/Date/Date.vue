@@ -12,8 +12,12 @@
 <style>
 
 .date__wrapper {
-    border-left: 4px solid #FF3052;
-    padding-left: 10px;
+  border-left: 4px solid #FF3052;
+  padding-left: 10px;
+}
+
+.active .date__wrapper {
+  border-left: 4px solid rgba(40,40,40, 0.4);
 }
 
 .date__day-month {
@@ -23,6 +27,10 @@
   text-align: left;
 }
 
+.active .date__day-month {
+  color: rgba(0,0,0, 0.4);
+}
+
 .date__time {
   font-size: 12px;
   font-weight: 500;
@@ -30,5 +38,6 @@
   text-align: left;
   margin-top: 6px; 
 }
+
 
 </style>
