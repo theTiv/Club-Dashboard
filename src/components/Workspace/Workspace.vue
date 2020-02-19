@@ -6,6 +6,9 @@
           <h2 class="workspace__title">My Favourites</h2>
         </header>
         <section class="workspace__content">
+          <template v-for="(section, i) in sections">
+            <Card :favourite="true" :cardData="section" :key="i" @CardFavourited="addFav" @CardUnfavourited="removeFav"></Card>
+          </template>
         </section>
       </div>
       <div class="workspace__sections">
@@ -13,8 +16,9 @@
           <h2 class="workspace__header">Workspace</h2>
         </header>
         <section class="workspace__content">
-          <!-- <Card v-for="section in sections" :key="section"></Card> -->
-          <Card />
+          <template v-for="(section, i) in sections">
+            <Card :favourite="false" :cardData="section" :key="i" @CardFavourited="addFav" @CardUnfavourited="removeFav"></Card>
+          </template>
         </section>
       </div>
     </div>
@@ -29,10 +33,47 @@ export default {
   components: {
     Card
   },
+  data() {
+    return {
+    favourites:[],
+    newFav:null
+    };
+  },
+  mounted() {
+    if(localStorage.getItem('favourites')) {
+      try {
+        this.favourites = JSON.parse(localStorage.getItem('favourites'));
+      } catch(e) {
+        localStorage.removeItem('favourites');
+      }
+    }
+  },
+  methods: {
+    addFav(value) {
+      this.newFav = value;
+      this.favourites.push(this.newFav);
+      this.saveFavs();
+    },
+    removeFav(value) {
+      
+      for( var i = 0; i < this.favourites.length; i++){ 
+        if ( this.favourites[i] === value) {
+        this.favourites.splice(i, 1); 
+        }
+      }
+
+      this.saveFavs();
+    },
+    saveFavs() {
+      let parsed = JSON.stringify(this.favourites);
+      localStorage.setItem('favourites', parsed);
+    }
+  },
   props: {
-    direction: String
+    sections: Array
   }
 };
+
 </script>
 
 <style>
@@ -56,7 +97,7 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-   position: relative;
+  position: relative;
   grid-gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }

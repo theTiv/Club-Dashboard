@@ -1,10 +1,10 @@
 <template>
   <div id="app" class="container">
     <header class="header">
-      <h2 class="site-title">GAA</h2>
+      <h2 class="site-title">GAA {{ favourites }}</h2>
     </header>
-    <Workspace class="workspace" />
-    <Notifications class="notifications" />
+    <Workspace class="workspace" :sections="sections" :favourites="favourites"/>
+    <Notifications class="notifications" :notifications="notifications" />
   </div>
 </template>
 
@@ -14,10 +14,25 @@ import Notifications from "./components/Notifications/Notifications";
 
 export default {
   name: "App",
+  data() {
+    return {
+      sections: this.$root.$data.sections,
+      notifications: this.$root.$data.notifications,
+      favourites: []
+    }
+  },
+  beforeCreate: () => {
+    console.log("Before Create");
+    // const favourites = [ 1, 5, 9, 10 ];
+    // return { 
+    //   const favourites = [ 1, 5, 9, 10 ]
+    // }
+  },
   components: {
     Workspace,
     Notifications
-  }
+  },
+  
 };
 </script>
 

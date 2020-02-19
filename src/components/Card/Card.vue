@@ -1,20 +1,20 @@
 <template>
   <div
     class="card"
-    :class="[direction, { active: hover }]"
+    :class="[{ active: hover }]"
     @mouseover="hover = true"
     @mouseleave="hover = false"
   >
     <div class="card__favourite">
-      <Icon name="star-full" fill="#FFC425" />
+      <div v-if="favourite" @click="removeFav"><Icon name="star-full" fill="#FFC425" /></div>
+      <div v-else @click="addFav"><Icon name="star-empty" fill="#FFC425" /></div>
     </div>
     <div class="card__icon">
       <Icon name="tickets" fill="#E55300" />
     </div>
-    <div class="card__title">Tickets</div>
+    <div class="card__title">Tickets </div>
     <div class="card__description">
-      Welcome to the Purchase Power portal here you can find lorem ipsum dolor
-      sit amet consequescat.
+      {{ cardData.id }}
     </div>
   </div>
 </template>
@@ -30,12 +30,49 @@ export default {
   },
   name: "Card",
   props: {
-    title: String,
-    icon: String,
-    description: String,
-    link: String,
-    direction: String
+    cardData: Object,
+    favourite: Boolean
   },
+  methods: {
+  addFav(){
+    this.$emit('CardFavourited', this.cardData.id)
+  },
+  removeFav(){
+    this.$emit('CardUnfavourited', this.cardData.id)
+  }
+  },
+  // methods: {
+  //   addFav() {
+  //     const cardData = this.cardData;
+  //     this.newFav = cardData.id;
+  //     this.favourites.push(this.newFav);
+  //     this.saveFavs();
+  //   },
+  //   removeFav(x) {
+  //     this.favourites.splice(x,1);
+  //     this.saveFavs();
+  //   },
+  //   saveFavs() {
+  //     let parsed = JSON.stringify(this.favourites);
+  //     localStorage.setItem('favourites', parsed);
+  //   }
+  // },
+  // methods: {
+  //   addFav() {
+  //     const cardData = this.cardData;
+  //     this.newFav = cardData.id;
+  //     this.favourites.push(this.newFav);
+  //     this.saveFavs();
+  //   },
+  //   removeFav(x) {
+  //     this.favourites.splice(x,1);
+  //     this.saveFavs();
+  //   },
+  //   saveFavs() {
+  //     let parsed = JSON.stringify(this.favourites);
+  //     localStorage.setItem('favourites', parsed);
+  //   }
+  // },
   components: {
     Icon
   }
