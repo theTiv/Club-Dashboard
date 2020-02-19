@@ -3,10 +3,7 @@
       <div class="notifications__title-container">
         <h3 class="notifications__title">Notifications Overview</h3>
       </div>
-      <Notification />
-      <Notification />
-      <Notification />
-      <Notification />
+      <Notification v-for="(notification, i) in notifications" :key="i" />
     </aside>
 </template>
 
@@ -15,8 +12,12 @@ import Notification from "./Notification/Notification";
 export default {
   components: {
     Notification
+  },
+  props: {
+    notifications: Array
   }
 };
+
 </script>
 
 <style>

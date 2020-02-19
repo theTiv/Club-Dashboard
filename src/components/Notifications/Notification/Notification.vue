@@ -5,7 +5,7 @@
         <Close @NotificationMinimized="isActive = $event"/>
     </div>
     <div class="notification__article">
-        The deadline for submitting expenses is this Friday 11th October. {{isActive}}
+      
     </div>
   </div>
 </template>
