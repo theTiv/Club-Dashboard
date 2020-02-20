@@ -6,8 +6,9 @@
           <h2 class="workspace__title">My Favourites</h2>
         </header>
         <section class="workspace__content">
-          <template v-for="(section, i) in sections">
-            <Card :favourite="true" :cardData="section" :key="i" @CardFavourited="addFav" @CardUnfavourited="removeFav"></Card>
+          <template v-for="(section, i) in favourites">
+            <!-- <div :key="i">{{section}}</div> -->
+            <Card :favourite="true" :cardData="section" :key="i" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
           </template>
         </section>
       </div>
@@ -16,8 +17,9 @@
           <h2 class="workspace__header">Workspace</h2>
         </header>
         <section class="workspace__content">
-          <template v-for="(section, i) in sections">
-            <Card :favourite="false" :cardData="section" :key="i" @CardFavourited="addFav" @CardUnfavourited="removeFav"></Card>
+          <template v-for="(section, i) in displaySections">
+            <!-- <div :key="i">{{section}}</div> -->
+            <Card :favourite="false" :cardData="section" :key="i" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
           </template>
         </section>
       </div>
@@ -28,6 +30,7 @@
 <script>
 /* Your JS goes here */
 import Card from "../Card/Card";
+// var results = [];
 
 export default {
   components: {
@@ -35,9 +38,46 @@ export default {
   },
   data() {
     return {
-    favourites:[],
-    newFav:null
+      favourites:[],
+      // results: [],
+      newFav:{}
     };
+  },
+  // computed: {
+  //       displayFavourites() {
+        
+  //         const arr1 = [1,2,3]
+  //         const arr2 = [4,5,6]
+  //         const arr3 = [...favourites, ...arr2] //arr3 ==> [1,2,3,4,5,6]
+  //         const arr = daysArray.concat(courseHwork);
+  //         const sorted_arr = arr.sort();
+  //         const results = [];
+
+  //         for (let i = 0; i < arr.length - 1; i++) {
+  //             if (sorted_arr[i + 1] == sorted_arr[i]) {
+  //                 results.push(sorted_arr[i]);
+  //             }
+  //         }
+
+  //       return { results }
+  //   }
+  // },
+  computed: {
+        displaySections: function ()  {
+          var results = [];
+        this.sections.forEach(sourceElement => {
+          console.log(this.favourites)
+          let targetElement = this.favourites.find(targetElement => {
+          return sourceElement['id'] === targetElement['id'];
+        })
+           console.log('targetElements')
+    // console.log(this.favourites)
+        targetElement ? '': results.push(sourceElement);
+  })
+   console.log('results')
+   console.log(results)
+        return results 
+    }
   },
   mounted() {
     if(localStorage.getItem('favourites')) {
@@ -50,18 +90,20 @@ export default {
   },
   methods: {
     addFav(value) {
+      console.log(value)
       this.newFav = value;
-      this.favourites.push(this.newFav);
-      this.saveFavs();
+      const matchingValue = this.favourites.includes(this.newFav);
+      if (!matchingValue) {
+        this.favourites.push(this.newFav);
+        this.saveFavs();
+      }
     },
     removeFav(value) {
-      
       for( var i = 0; i < this.favourites.length; i++){ 
         if ( this.favourites[i] === value) {
         this.favourites.splice(i, 1); 
         }
       }
-
       this.saveFavs();
     },
     saveFavs() {
@@ -99,6 +141,6 @@ export default {
   display: grid;
   position: relative;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
 }
 </style>
