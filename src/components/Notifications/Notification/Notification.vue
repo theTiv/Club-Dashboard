@@ -1,5 +1,5 @@
 <template>
-  <div class="notification__container" :class="{ active: isActive }" >
+  <div class="notification__container" >
     <div class="notification__details-container">
         <Date :date="notificationData.date" :time="notificationData.time" />
         <Close @NotificationMinimized="isActive = $event"/>

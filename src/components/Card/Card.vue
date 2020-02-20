@@ -1,6 +1,8 @@
 <template>
   <div
-    :class="[`item-${cardData.id}`]"
+    class="card"
+    :class="[{ active: hover }]"
+    @mouseover="emitGlobalMouseoverEvent()"
   >
     <div class="card__favourite">
       <div v-if="favourite" @click="removeFav"><Icon name="star-full" fill="#FFC425" /></div>
@@ -18,7 +20,7 @@
 
 <script>
 import Icon from "../UI/Icons/Icons";
-
+import { eventBus } from '../../main';
 export default {
   data() {
     return {
@@ -36,7 +38,19 @@ export default {
   },
   removeFav(){
     this.$emit('CardUnfavourited', this.cardData.id)
+  },
+  emitGlobalMouseoverEvent() {
+    console.log("MOUSED OVER");
+    this.isActive = !this.isActive
+    eventBus.$emit('i-got-moused-over', this.isActive);
   }
+  // displayNotifications() {
+  //   // this.$emit('dimNotifications', true)
+  //   eventBus.$emit('displayNotifications', true);
+  // },
+  // showNotifications() {
+  //   eventBus.$emit('showNotifications', true)
+  // }
   },
   // methods: {
   //   addFav() {
@@ -96,74 +110,23 @@ a {
   color: #42b983;
 }
 
-[class^="item"] {
-  text-align: center;
+
+.card {
+  animation: animate 5s;
   box-sizing: border-box;
-  // padding: 10%;
-  // font-size: 5em;
-    display: flex;
+  height: 180px;
+  width: 180px;
+  min-width: 180px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+  color: black;
+  display: flex;
   flex-direction: column;
   padding: 22px;
-  color: black;
-  transition: .5s;
-  background-color: white;
-    border-radius: 8px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+  margin-right: 10px;
+  z-index: 1;
 }
-
-[class^="item"]:hover {
-  transition: 0.5s;
-  z-index:2; /*we increase the z-index to cover the other*/
-  // background:
-  //   /*we this to keep the initial background*/
-  //   linear-gradient(rgba(40, 180, 240, .3),rgba(40, 180, 240, .3)),
-  //   #fff;
-}
-
-[class^="item"]:nth-child(3n + 1):hover {
-  margin-right:calc(-100% - 10px); /* we remove (2 x grid items + 2 x gap) */
-}
-[class^="item"]:nth-child(3n + 2):hover {
-  margin-right:calc(-100% - 10px); /* we remove (2 x grid items + 2 x gap) */
-}
-[class^="item"]:nth-child(3n + 3):hover {
-  margin-left:calc(-100% - 10px);
-}
-
-// [class^="item"]:nth-child(3n + 1):hover {
-//   margin-right:calc(-200% - 20px); /* we remove (2 x grid items + 2 x gap) */
-// }
-// [class^="item"]:nth-child(3n + 2):hover {
-//   margin-left:calc(-50% - 10px);
-//   margin-right:calc(-50% - 10px);
-// }
-// [class^="item"]:nth-child(3n + 3):hover {
-//   margin-left:calc(-100% - 20px);
-// }
-
-// .container>div {
-//   border: 2px solid #0580d5;
-//   background-color: rgba(40, 180, 240, .3);
-//   border-radius: 5px;
-// }
-
-
-//.card {
-  // animation: animate 5s;
-  // box-sizing: border-box;
-  // height: 180px;
-  // width: 180px;
-  // min-width: 180px;
-  // background-color: white;
-  // border-radius: 8px;
-  // box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
-  // color: black;
-  // display: flex;
-  // flex-direction: column;
-  // padding: 22px;
-  // margin-right: 10px;
-  // z-index: 1;
-//}
 
 //.card {
   // animation: animate 5s;
@@ -183,39 +146,34 @@ a {
   // z-index: 1;
 //}
 
-// .card:hover {
-//   width: 390px;
-//   transition: 0.5s;
-//   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-//   z-index: 2;
-// }
-
-// .card:hover {
-//   transition: 0.5s;
-//   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-// }
+.card:hover {
+  width: 390px;
+  transition: 0.5s;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
 
 .item .card__favourite {
   transition: 0.5s;
 }
 
-[class^="item"]:hover .card__favourite {
+.card:hover .card__favourite {
   margin-bottom: 0;
 }
 
-[class^="item"]:hover .card__description {
+.card:hover .card__description {
   animation: fadein 2s;
   display: block;
   text-align: left;
   transition: 1s;
 }
 
-// .item .card__description {
-//   /* animation: fadeout 2s; */
-//   display: block;
-//   text-align: left;
-//   transition: 1s;
-// }
+.item .card__description {
+  /* animation: fadeout 2s; */
+  display: block;
+  text-align: left;
+  transition: 1s;
+}
 
 .card__favourite {
   align-self: flex-end;

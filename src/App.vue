@@ -1,26 +1,40 @@
 <template>
   <div id="app" class="container">
     <header class="header">
-      <h2 class="site-title">GAA</h2>
+      <h2 class="site-title">GAA {{ active }}</h2>
     </header>
     <Workspace class="workspace" :sections="sections" :favourites="favourites"/>
-    <Notifications class="notifications" :notifications="notifications" />
+    <Notifications class="notifications" :notifications="notifications" :class="[{ active: data }]" />
   </div>
 </template>
 
 <script>
 import Workspace from "./components/Workspace/Workspace";
 import Notifications from "./components/Notifications/Notifications";
-
+import { eventBus } from './main';
+// const clickHandler = function() {
+//   const isActive = 
+// }
 export default {
   name: "App",
   data() {
     return {
       sections: this.$root.$data.sections,
       notifications: this.$root.$data.notifications,
-      favourites: []
+      favourites: [],
+      data: null
     }
   },
+  //   props: {
+  //   isActive:{
+  //       type: String
+  //   } 
+  // },
+  // methods: {
+  //   test() {
+  //     isActive = true;
+  //   }
+  // },
   beforeCreate: () => {
     console.log("Before Create");
     // const favourites = [ 1, 5, 9, 10 ];
@@ -28,10 +42,17 @@ export default {
     //   const favourites = [ 1, 5, 9, 10 ]
     // }
   },
+  created() {
+// Listen for the button-was-clicked event and its payload
+eventBus.$on('i-got-moused-over', clickCount => {
+    console.log(clickCount = `${clickCount}`)
+});
+    // eventBus.$on('i-got-moused-over', true);
+  },
   components: {
     Workspace,
     Notifications
-  },
+  }
   
 };
 </script>

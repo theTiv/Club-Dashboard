@@ -7,7 +7,6 @@
         </header>
         <section class="workspace__content">
           <template v-for="(section, i) in favourites">
-            <!-- <div :key="i">{{section}}</div> -->
             <Card :favourite="true" :cardData="section" :key="i" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
           </template>
         </section>
@@ -18,7 +17,6 @@
         </header>
         <section class="workspace__content">
           <template v-for="(section, i) in displaySections">
-            <!-- <div :key="i">{{section}}</div> -->
             <Card :favourite="false" :cardData="section" :key="i" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
           </template>
         </section>
@@ -128,29 +126,20 @@ export default {
 }
 
 .workspace__content {
-  /* display: grid;
+  display: grid;
   width: 100%;
-  grid-template-columns: repeat(4, 1fr);
+  /* grid-template-columns: repeat(4, 180px); */
   align-content: space-around;
   justify-content: space-between;
   grid-gap: 10px;
   color: #444;
-  position: relative; */
-  /* max-width: 1200px;
+  position: relative;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   position: relative;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 180px)); */
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(3, minmax(100px, auto));
-  grid-template-rows: repeat(3, minmax(100px, auto));
+  grid-template-columns: repeat(4, minmax(180px, 180px));
 }
 
-@media only screen and (min-width: 789px) {
-  .workspace__content {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 </style>
