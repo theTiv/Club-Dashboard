@@ -1,12 +1,18 @@
 <template>
     <div class="date__wrapper">
-        <div class="date__day-month">24 Jan</div>
-        <div class="date__time">6pm</div>
+        <div class="date__day-month">{{ date }}</div>
+        <div class="date__time">{{ time }}</div>
     </div>
 </template>
 
 <script>
+export default {
 
+  props: {
+    date: String,
+    time: String
+  },
+}
 </script>
 
 <style>

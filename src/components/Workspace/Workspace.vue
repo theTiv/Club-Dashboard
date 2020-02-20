@@ -136,11 +136,21 @@ export default {
   grid-gap: 10px;
   color: #444;
   position: relative; */
-  max-width: 1200px;
+  /* max-width: 1200px;
   margin: 0 auto;
   display: grid;
   position: relative;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 180px)); */
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, minmax(100px, auto));
+  grid-template-rows: repeat(3, minmax(100px, auto));
+}
+
+@media only screen and (min-width: 789px) {
+  .workspace__content {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

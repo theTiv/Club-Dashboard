@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <header class="header">
-      <h2 class="site-title">GAA {{ favourites }}</h2>
+      <h2 class="site-title">GAA</h2>
     </header>
     <Workspace class="workspace" :sections="sections" :favourites="favourites"/>
     <Notifications class="notifications" :notifications="notifications" />

@@ -3,7 +3,9 @@
       <div class="notifications__title-container">
         <h3 class="notifications__title">Notifications Overview</h3>
       </div>
-      <Notification v-for="(notification, i) in notifications" :key="i" />
+      <template v-for="(notification, i) in notifications">
+        <Notification :notificationData="notification" :key="i"  />
+      </template>
     </aside>
 </template>
 
