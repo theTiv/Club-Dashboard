@@ -3,10 +3,15 @@
     class="card"
     :class="[{ active: hover }]"
     @mouseover="emitGlobalMouseoverEvent()"
+    @mouseout="emitGlobalMouseoverEvent()"
   >
     <div class="card__favourite">
-      <div v-if="favourite" @click="removeFav"><Icon name="star-full" fill="#FFC425" /></div>
-      <div v-else @click="addFav"><Icon name="star-empty" fill="#FFC425" /></div>
+      <div v-if="favourite" @click="removeFav">
+        <Icon name="star-full" fill="#FFC425" />
+      </div>
+      <div v-else @click="addFav">
+        <Icon name="star-empty" fill="#FFC425" />
+      </div>
     </div>
     <div class="card__icon">
       <Icon :name="cardData.icon" fill="#E55300" />
@@ -20,7 +25,7 @@
 
 <script>
 import Icon from "../UI/Icons/Icons";
-import { eventBus } from '../../main';
+import { eventBus } from "../../main";
 export default {
   data() {
     return {
@@ -30,67 +35,29 @@ export default {
   name: "Card",
   props: {
     cardData: Object,
-    favourite: Boolean
+    favourite: Boolean,
+    cardNum: Number
   },
   methods: {
-  addFav(){
-    this.$emit('CardFavourited', this.cardData.id)
+    addFav() {
+      this.$emit("CardFavourited", this.cardData.id);
+    },
+    removeFav() {
+      this.$emit("CardUnfavourited", this.cardData.id);
+    },
+    emitGlobalMouseoverEvent() {
+      if (this.cardNum % 4 == 0) {
+        this.hover = !this.hover;
+        eventBus.$emit("i-got-moused-over", this.hover);
+      }
+    }
   },
-  removeFav(){
-    this.$emit('CardUnfavourited', this.cardData.id)
-  },
-  emitGlobalMouseoverEvent() {
-    console.log("MOUSED OVER");
-    this.isActive = !this.isActive
-    eventBus.$emit('i-got-moused-over', this.isActive);
-  }
-  // displayNotifications() {
-  //   // this.$emit('dimNotifications', true)
-  //   eventBus.$emit('displayNotifications', true);
-  // },
-  // showNotifications() {
-  //   eventBus.$emit('showNotifications', true)
-  // }
-  },
-  // methods: {
-  //   addFav() {
-  //     const cardData = this.cardData;
-  //     this.newFav = cardData.id;
-  //     this.favourites.push(this.newFav);
-  //     this.saveFavs();
-  //   },
-  //   removeFav(x) {
-  //     this.favourites.splice(x,1);
-  //     this.saveFavs();
-  //   },
-  //   saveFavs() {
-  //     let parsed = JSON.stringify(this.favourites);
-  //     localStorage.setItem('favourites', parsed);
-  //   }
-  // },
-  // methods: {
-  //   addFav() {
-  //     const cardData = this.cardData;
-  //     this.newFav = cardData.id;
-  //     this.favourites.push(this.newFav);
-  //     this.saveFavs();
-  //   },
-  //   removeFav(x) {
-  //     this.favourites.splice(x,1);
-  //     this.saveFavs();
-  //   },
-  //   saveFavs() {
-  //     let parsed = JSON.stringify(this.favourites);
-  //     localStorage.setItem('favourites', parsed);
-  //   }
-  // },
   components: {
     Icon
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 @import "../../less/vars.less";
 @import "../../less/mixins.less";
@@ -110,7 +77,6 @@ a {
   color: #42b983;
 }
 
-
 .card {
   animation: animate 5s;
   box-sizing: border-box;
@@ -127,24 +93,6 @@ a {
   margin-right: 10px;
   z-index: 1;
 }
-
-//.card {
-  // animation: animate 5s;
-  // box-sizing: border-box;
-  // height: 180px;
-  // width: 180px;
-  // min-width: 180px;
-  // background-color: white;
-  // border-radius: 8px;
-  // box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
-  // color: black;
-  // display: flex;
-  // flex-direction: column;
-  // padding: 22px;
-  // margin-right: 10px;
-  // transition: 0.5s;
-  // z-index: 1;
-//}
 
 .card:hover {
   width: 390px;
@@ -169,7 +117,6 @@ a {
 }
 
 .item .card__description {
-  /* animation: fadeout 2s; */
   display: block;
   text-align: left;
   transition: 1s;

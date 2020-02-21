@@ -7,7 +7,7 @@
         </header>
         <section class="workspace__content">
           <template v-for="(section, i) in favourites">
-            <Card :favourite="true" :cardData="section" :key="i" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
+            <Card :favourite="true" :cardData="section" :key="i" :cardNum="i + 1" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
           </template>
         </section>
       </div>
@@ -17,7 +17,7 @@
         </header>
         <section class="workspace__content">
           <template v-for="(section, i) in displaySections">
-            <Card :favourite="false" :cardData="section" :key="i" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
+            <Card :favourite="false" :cardData="section" :key="i" :cardNum="i + 1" :useFade="true" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
           </template>
         </section>
       </div>
@@ -26,9 +26,7 @@
 </template>
 
 <script>
-/* Your JS goes here */
 import Card from "../Card/Card";
-// var results = [];
 
 export default {
   components: {
@@ -37,43 +35,18 @@ export default {
   data() {
     return {
       favourites:[],
-      // results: [],
       newFav:{}
     };
   },
-  // computed: {
-  //       displayFavourites() {
-        
-  //         const arr1 = [1,2,3]
-  //         const arr2 = [4,5,6]
-  //         const arr3 = [...favourites, ...arr2] //arr3 ==> [1,2,3,4,5,6]
-  //         const arr = daysArray.concat(courseHwork);
-  //         const sorted_arr = arr.sort();
-  //         const results = [];
-
-  //         for (let i = 0; i < arr.length - 1; i++) {
-  //             if (sorted_arr[i + 1] == sorted_arr[i]) {
-  //                 results.push(sorted_arr[i]);
-  //             }
-  //         }
-
-  //       return { results }
-  //   }
-  // },
   computed: {
         displaySections: function ()  {
           var results = [];
-        this.sections.forEach(sourceElement => {
-          console.log(this.favourites)
+          this.sections.forEach(sourceElement => {
           let targetElement = this.favourites.find(targetElement => {
           return sourceElement['id'] === targetElement['id'];
         })
-           console.log('targetElements')
-    // console.log(this.favourites)
         targetElement ? '': results.push(sourceElement);
   })
-   console.log('results')
-   console.log(results)
         return results 
     }
   },
@@ -88,7 +61,6 @@ export default {
   },
   methods: {
     addFav(value) {
-      console.log(value)
       this.newFav = value;
       const matchingValue = this.favourites.includes(this.newFav);
       if (!matchingValue) {
@@ -113,7 +85,6 @@ export default {
     sections: Array
   }
 };
-
 </script>
 
 <style>
@@ -128,7 +99,6 @@ export default {
 .workspace__content {
   display: grid;
   width: 100%;
-  /* grid-template-columns: repeat(4, 180px); */
   align-content: space-around;
   justify-content: space-between;
   grid-gap: 10px;

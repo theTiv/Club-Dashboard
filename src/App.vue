@@ -1,20 +1,26 @@
 <template>
   <div id="app" class="container">
     <header class="header">
-      <h2 class="site-title">GAA {{ active }}</h2>
+      <h2 class="site-title">GAA</h2>
     </header>
-    <Workspace class="workspace" :sections="sections" :favourites="favourites"/>
-    <Notifications class="notifications" :notifications="notifications" :class="[{ active: data }]" />
+    <Workspace
+      class="workspace"
+      :sections="sections"
+      :favourites="favourites"
+    />
+    <Notifications
+      class="notifications"
+      :notifications="notifications"
+      :class="[{ fadeOut: fade }]"
+    />
   </div>
 </template>
 
 <script>
 import Workspace from "./components/Workspace/Workspace";
 import Notifications from "./components/Notifications/Notifications";
-import { eventBus } from './main';
-// const clickHandler = function() {
-//   const isActive = 
-// }
+import { eventBus } from "./main";
+
 export default {
   name: "App",
   data() {
@@ -22,38 +28,19 @@ export default {
       sections: this.$root.$data.sections,
       notifications: this.$root.$data.notifications,
       favourites: [],
-      data: null
-    }
-  },
-  //   props: {
-  //   isActive:{
-  //       type: String
-  //   } 
-  // },
-  // methods: {
-  //   test() {
-  //     isActive = true;
-  //   }
-  // },
-  beforeCreate: () => {
-    console.log("Before Create");
-    // const favourites = [ 1, 5, 9, 10 ];
-    // return { 
-    //   const favourites = [ 1, 5, 9, 10 ]
-    // }
+      fade: false
+    };
   },
   created() {
-// Listen for the button-was-clicked event and its payload
-eventBus.$on('i-got-moused-over', clickCount => {
-    console.log(clickCount = `${clickCount}`)
-});
-    // eventBus.$on('i-got-moused-over', true);
+    // Listen for the button-was-clicked event and its payload
+    eventBus.$on("i-got-moused-over", data => {
+      this.fade = data;
+    });
   },
   components: {
     Workspace,
     Notifications
   }
-  
 };
 </script>
 
@@ -96,5 +83,11 @@ body {
   grid-template-areas:
     "header header header"
     "main main sidebar";
+}
+
+.fadeOut {
+    background-color: #999;
+    transition: 0.5s;
+    opacity: 0.5;
 }
 </style>
