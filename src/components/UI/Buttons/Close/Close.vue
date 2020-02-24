@@ -1,20 +1,32 @@
 <template>
     <div class="close__wrapper">
-        <div class="close__button" :class="{ clicked: isActive }" @click="toggleClass"></div>
+        <div class="close__button" :class="{ clicked: isActive }" :isMinimized="isMinimized" @click="toggleClass(); isMinimized ? maximize() : minimize()"></div>
     </div>
 </template>
 
 <script>
+import { eventBus } from "../../../../main";
+
 export default {
   data() {
     return {
-        isActive: false
+      isActive: false
     }
   },
+  props: {
+    id: Number,
+    isMinimized: Boolean
+  },
   methods: {
+    minimize() {
+      eventBus.$emit("minimized", this.id);
+    },
+    maximize() {
+      eventBus.$emit("maximized", this.id);
+    },
     toggleClass(){
-       this.isActive = !this.isActive
-       this.$emit('NotificationMinimized', this.isActive)
+       this.isActive = !this.isActive;
+       this.$emit('NotificationMinimized', this.isActive);
     }
    } 
 };

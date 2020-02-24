@@ -1,8 +1,8 @@
 <template>
-  <div class="notification__container" >
+  <div class="notification__container" :class="{clicked: isActive}">
     <div class="notification__details-container">
         <Date :date="notificationData.date" :time="notificationData.time" />
-        <Close @NotificationMinimized="isActive = $event"/>
+        <Close @NotificationMinimized="isActive = $event" :id="notificationData.id" :isMinimized="isMinimized" />
     </div>
     <div class="notification__article">
       {{ notificationData.description }}
@@ -21,7 +21,8 @@ export default {
   },
   data() {
     return {
-        isActive: false
+      isActive: false,
+      isMinimized: false
     }
   },
     props: {
@@ -43,10 +44,10 @@ export default {
   padding: 16px;
   margin-bottom: 20px;
   overflow: hidden;
-    transition: 0.5s;
+  transition: 0.5s;
 }
 
-.active {
+.clicked {
   height: 70px;
   transition: 0.5s;
   color:rgba(255,255,255, 0.4);
@@ -54,8 +55,8 @@ export default {
 }
 
 .notification__details-container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .notification__article {
