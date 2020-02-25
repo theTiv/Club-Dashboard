@@ -1,12 +1,16 @@
 <template>
-    <aside class="notifications__container">
-      <div class="notifications__title-container">
-        <h3 class="notifications__title">Notifications Overview</h3>
-      </div>
-      <template v-for="(notification, i) in notifications">
-        <Notification :notificationData="notification" :key="i" :isMinimized="isMinimized" />
-      </template>
-    </aside>
+  <aside class="notifications__container">
+    <div class="notifications__title-container">
+      <h3 class="notifications__title">Notifications Overview</h3>
+    </div>
+    <template v-for="(notification, i) in displayNotifications">
+      <Notification
+        :notificationData="notification"
+        :key="i"
+        :minmax="notification.isActive"
+      />
+    </template>
+  </aside>
 </template>
 
 <script>
@@ -19,56 +23,74 @@ export default {
   },
   data() {
     return {
-      minifiedNotifications:[],
-      minify:{},
-      isMinimized: false
+      minifiedNotifications: [],
+      minify: {}
     };
   },
   props: {
     notifications: Array
   },
+  computed: {
+    displayNotifications: function() {
+      var results = [];
+      this.notifications.forEach(sourceElement => {
+      this.minifiedNotifications.find(targetElement => {
+          if (sourceElement["id"] === targetElement["id"]) {
+            sourceElement.isActive = true;
+          }
+          // console.log("Compare:");
+          // console.log(sourceElement["id"]);
+          // console.log(targetElement["id"]);
+        });
+        results.push(sourceElement);
+      });
+      console.log(results);
+      return results;
+    }
+  },
   mounted() {
-    if(localStorage.getItem('minifiedNotifications')) {
+    if (localStorage.getItem("minifiedNotifications")) {
       try {
-        this.favourites = JSON.parse(localStorage.getItem('minifiedNotifications'));
-      } catch(e) {
-        localStorage.removeItem('minifiedNotifications');
+        this.minifiedNotifications = JSON.parse(
+        localStorage.getItem("minifiedNotifications")
+        );
+      } catch (e) {
+        localStorage.removeItem("minifiedNotifications");
       }
     }
   },
   created() {
-    eventBus.$on("minimized", (value) => {
+    eventBus.$on("minimized", value => {
       this.minify = value;
       const matchingValue = this.minifiedNotifications.includes(this.minify);
+      console.log(matchingValue);
       if (!matchingValue) {
         this.minifiedNotifications.push(this.minify);
         this.saveNotifications();
-        this.isMinimized = true;
+        // this.isMinimized = true;
       }
     });
 
-    eventBus.$on("maximized", (value) => {
-      for( var i = 0; i < this.minifiedNotifications.length; i++){ 
-        if ( this.minifiedNotifications[i] === value) {
-        this.minifiedNotifications.splice(i, 1); 
+    eventBus.$on("maximized", value => {
+      for (var i = 0; i < this.minifiedNotifications.length; i++) {
+        if (this.minifiedNotifications[i] === value) {
+          this.minifiedNotifications.splice(i, 1);
         }
       }
-      this.isMinimized = false;
+      // this.isMinimized = false;
       this.saveNotifications();
     });
   },
   methods: {
     saveNotifications() {
       let parsed = JSON.stringify(this.minifiedNotifications);
-      localStorage.setItem('minifiedNotifications', parsed);
+      localStorage.setItem("minifiedNotifications", parsed);
     }
   }
 };
-
 </script>
 
 <style>
-
 .notifications__container {
   display: inline-flex;
   justify-content: flex-start;
@@ -84,5 +106,4 @@ export default {
 .notifications__title {
   text-align: left;
 }
-
 </style>

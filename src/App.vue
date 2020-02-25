@@ -67,6 +67,8 @@ body {
   color: white;
   padding-right: 20px;
 }
+
+@media only screen and (min-width: 768px) {
 .notifications {
   grid-area: sidebar;
   background-color: #3485ab;
@@ -74,6 +76,16 @@ body {
   padding-left: 20px;
   padding-right: 20px;
 }
+
+} 
+/* 
+.notifications {
+    position: absolute;
+    right: 0;
+    margin-right: -390px;
+} */
+
+
 
 .container {
   display: grid;

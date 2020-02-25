@@ -1,8 +1,11 @@
 <template>
-  <div class="notification__container" :class="{clicked: isActive}">
+  <div class="notification__container" :class="{ clicked: minmax }">
     <div class="notification__details-container">
-        <Date :date="notificationData.date" :time="notificationData.time" />
-        <Close @NotificationMinimized="isActive = $event" :id="notificationData.id" :isMinimized="isMinimized" />
+      <Date :date="notificationData.date" :time="notificationData.time" />
+      <Close
+        @NotificationMinimized="minmax = $event"
+        :notificationData="notificationData"
+      />
     </div>
     <div class="notification__article">
       {{ notificationData.description }}
@@ -11,29 +14,31 @@
 </template>
 
 <script>
-import Date from "../Date/Date"
-import Close from "../../UI/Buttons/Close/Close"
+import Date from "../Date/Date";
+import Close from "../../UI/Buttons/Close/Close";
 
 export default {
   components: {
     Date,
     Close
   },
-  data() {
-    return {
-      isActive: false,
-      isMinimized: false
-    }
-  },
-    props: {
+  props: {
     notificationData: Object,
-    favourite: Boolean
+    minmax: Boolean
   },
-}
+  computed: {
+    // activate() {
+    //   console.log("ACTIVE OR NOT?");
+    //   const isActive = this.notificationData.isActive ? true : false;
+    //   console.log(this.notificationData.isActive);
+    //   console.log(isActive);
+    //   return isActive;
+    // }
+  }
+};
 </script>
 
 <style scoped>
-
 .notification__container {
   height: 140px;
   width: 340px;
@@ -50,7 +55,7 @@ export default {
 .clicked {
   height: 70px;
   transition: 0.5s;
-  color:rgba(255,255,255, 0.4);
+  color: rgba(255, 255, 255, 0.4);
   background-color: #ccc;
 }
 
@@ -65,5 +70,4 @@ export default {
   text-align: left;
   margin-top: 16px;
 }
-
 </style>

@@ -14,15 +14,15 @@ export default {
     }
   },
   props: {
-    id: Number,
+    notificationData: Object,
     isMinimized: Boolean
   },
   methods: {
     minimize() {
-      eventBus.$emit("minimized", this.id);
+      eventBus.$emit("minimized", this.notificationData);
     },
     maximize() {
-      eventBus.$emit("maximized", this.id);
+      eventBus.$emit("maximized", this.notificationData);
     },
     toggleClass(){
        this.isActive = !this.isActive;

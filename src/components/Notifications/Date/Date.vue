@@ -22,6 +22,11 @@ export default {
   padding-left: 10px;
 }
 
+.fadeOut .date__wrapper {
+  border-left: 4px solid rgb(107, 107, 107);
+  padding-left: 10px;
+}
+
 .active .date__wrapper {
   border-left: 4px solid rgba(40,40,40, 0.4);
 }
