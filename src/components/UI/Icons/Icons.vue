@@ -4,6 +4,7 @@
     width="24"
     height="24"
     viewBox="0 0 24 24"
+    :fill="fill"
   >
     <path :d="path" />
   </svg>
@@ -52,15 +53,60 @@ const icons = {
     "star-empty": 
     "m25.477041,9.257221l-8.634856,-1.254303l-3.861317,-7.824166l-3.861317,7.824166l-8.634856,1.254303l6.248087,6.090322l-1.474548,8.598929l7.722635,-4.059694l7.722635,4.059694l-1.474548,-8.598929l6.248087,-6.090322zm-12.496173,8.698899l-5.45458,2.867872l1.041868,-6.07314l-4.412711,-4.300246l6.098132,-0.885666l2.72729,-5.524871l2.72729,5.524871l6.098132,0.885666l-4.412711,4.300246l1.041868,6.07314l-5.45458,-2.867872z",
 };
+
+const colors = {
+  "childwelfare":
+    "#E55300",
+  "clubdraw":
+    "#E55300",
+  "clubmap":
+    "#CFCAB7",
+  "downloads":
+    "#FFC425",
+  "elearning":
+    "#CFCAB7",
+  "email":
+    "#33B3BF",
+  "favourite":
+    "#E55300",
+  "gdpr":
+    "#0E5A6C",
+  "gms":
+    "#006792",
+  "grma":
+    "#0E5A6C",
+    "insurance":
+    "#9A3324",
+    "membership":
+    "#A99766",
+    "mis":
+    "#EA7FA8",
+    "newsletter":
+    "#EA80A8",
+    "notfavourite":
+    "#E55300",
+    "playertransfer":
+    "#FFC424",
+    "purchasepower":
+    "#006792",
+    "tickets":
+    "#E55300",
+    "star-full": 
+    "#E55300",
+    "star-empty": "#E55300",
+};
+
 export default {
   name: "Icons",
   props: {
-    name: String,
-    color: String
+    name: String
   },
   computed: {
     path() {
       return icons[this.name];
+    },
+    fill() {
+      return colors[this.name];
     }
   }
 };

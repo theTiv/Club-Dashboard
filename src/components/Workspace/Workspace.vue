@@ -7,8 +7,13 @@
         </header>
         <section class="workspace__content">
           <template v-for="(section, i) in favourites">
-            <!-- <div :key="i">{{section}}</div> -->
-            <Card :favourite="true" :cardData="section" :key="i" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
+            <Card
+              :favourite="true"
+              :cardData="section"
+              :key="i"
+              @CardFavourited="addFav(section)"
+              @CardUnfavourited="removeFav(section)"
+            ></Card>
           </template>
         </section>
       </div>
@@ -18,8 +23,13 @@
         </header>
         <section class="workspace__content">
           <template v-for="(section, i) in displaySections">
-            <!-- <div :key="i">{{section}}</div> -->
-            <Card :favourite="false" :cardData="section" :key="i" @CardFavourited="addFav(section)" @CardUnfavourited="removeFav(section)"></Card>
+            <Card
+              :favourite="false"
+              :cardData="section"
+              :key="i"
+              @CardFavourited="addFav(section)"
+              @CardUnfavourited="removeFav(section)"
+            ></Card>
           </template>
         </section>
       </div>
@@ -37,53 +47,34 @@ export default {
   },
   data() {
     return {
-      favourites:[],
+      favourites: [],
       // results: [],
-      newFav:{}
+      newFav: {}
     };
   },
-  // computed: {
-  //       displayFavourites() {
-        
-  //         const arr1 = [1,2,3]
-  //         const arr2 = [4,5,6]
-  //         const arr3 = [...favourites, ...arr2] //arr3 ==> [1,2,3,4,5,6]
-  //         const arr = daysArray.concat(courseHwork);
-  //         const sorted_arr = arr.sort();
-  //         const results = [];
-
-  //         for (let i = 0; i < arr.length - 1; i++) {
-  //             if (sorted_arr[i + 1] == sorted_arr[i]) {
-  //                 results.push(sorted_arr[i]);
-  //             }
-  //         }
-
-  //       return { results }
-  //   }
-  // },
   computed: {
-        displaySections: function ()  {
-          var results = [];
-        this.sections.forEach(sourceElement => {
-          // console.log(this.favourites)
-          let targetElement = this.favourites.find(targetElement => {
-          return sourceElement['id'] === targetElement['id'];
-        })
-          //  console.log('targetElements')
-    // console.log(this.favourites)
-        targetElement ? '': results.push(sourceElement);
-  })
-  //  console.log('results')
-  //  console.log(results)
-        return results 
+    displaySections: function() {
+      var results = [];
+      this.sections.forEach(sourceElement => {
+        // console.log(this.favourites)
+        let targetElement = this.favourites.find(targetElement => {
+          return sourceElement["id"] === targetElement["id"];
+        });
+        //  console.log('targetElements')
+        // console.log(this.favourites)
+        targetElement ? "" : results.push(sourceElement);
+      });
+      //  console.log('results')
+      //  console.log(results)
+      return results;
     }
   },
   mounted() {
-    if(localStorage.getItem('favourites')) {
+    if (localStorage.getItem("favourites")) {
       try {
-        this.favourites = JSON.parse(localStorage.getItem('favourites'));
-      } catch(e) {
-        localStorage.removeItem('favourites');
+        this.favourites = JSON.parse(localStorage.getItem("favourites"));
+      } catch (e) {
+        localStorage.removeItem("favourites");
       }
     }
   },
@@ -98,23 +89,22 @@ export default {
       }
     },
     removeFav(value) {
-      for( var i = 0; i < this.favourites.length; i++){ 
-        if ( this.favourites[i] === value) {
-        this.favourites.splice(i, 1); 
+      for (var i = 0; i < this.favourites.length; i++) {
+        if (this.favourites[i] === value) {
+          this.favourites.splice(i, 1);
         }
       }
       this.saveFavs();
     },
     saveFavs() {
       let parsed = JSON.stringify(this.favourites);
-      localStorage.setItem('favourites', parsed);
+      localStorage.setItem("favourites", parsed);
     }
   },
   props: {
     sections: Array
   }
 };
-
 </script>
 
 <style>

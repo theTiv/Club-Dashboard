@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <header class="header">
-      <h2 class="site-title">GAA</h2>
+      <h2 class="site-title">GAA Width: {{ window.width }}, Height: {{ window.height }}, Cards: {{ window.cards }}</h2>
     </header>
     <Workspace
       class="workspace"
@@ -22,12 +22,57 @@ export default {
     return {
       sections: this.$root.$data.sections,
       notifications: this.$root.$data.notifications,
-      favourites: []
+      favourites: [],
+      window: {
+        width: 0,
+        height: 0,
+        cards: 0
+      }
     };
   },
   components: {
     Workspace,
     Notifications
+  },
+created() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
+  },
+  methods: {
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+      const width = this.window.width;
+      let cards;
+      switch(true) {
+        // Small devices
+        case (width < 576):
+          cards = 2;
+        break;
+        // Medium devices
+        case (width < 768):
+          // code block
+            cards = 2;
+          break;
+          // Large devices
+        case (width < 992):
+          // code block
+            cards = 3;
+          break;
+        // Large devices
+        case (width < 1200):
+            cards = 4;
+          break;
+        // Extra large devices
+        case (width >= 1200):
+            cards = 5;
+          break;
+      }
+            this.window.cards = cards;
+    }
   }
 };
 </script>
