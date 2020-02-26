@@ -5,7 +5,7 @@
         <header class="workspace__header">
           <h2 class="workspace__title">My Favourites</h2>
         </header>
-        <section class="workspace__content">
+        <section class="workspace__content" :class="cardsPerRow">
           <template v-for="(section, i) in favourites">
             <Card
               :favourite="true"
@@ -21,7 +21,7 @@
         <header class="workspace__title">
           <h2 class="workspace__header">Workspace</h2>
         </header>
-        <section class="workspace__content">
+        <section class="workspace__content" :class="cardsPerRow">
           <template v-for="(section, i) in displaySections">
             <Card
               :favourite="false"
@@ -39,7 +39,6 @@
 
 <script>
 import Card from "../Card/Card";
-// var results = [];
 
 export default {
   components: {
@@ -48,25 +47,22 @@ export default {
   data() {
     return {
       favourites: [],
-      // results: [],
       newFav: {}
     };
   },
   computed: {
-    displaySections: function() {
+    displaySections() {
       var results = [];
       this.sections.forEach(sourceElement => {
-        // console.log(this.favourites)
         let targetElement = this.favourites.find(targetElement => {
           return sourceElement["id"] === targetElement["id"];
         });
-        //  console.log('targetElements')
-        // console.log(this.favourites)
         targetElement ? "" : results.push(sourceElement);
       });
-      //  console.log('results')
-      //  console.log(results)
       return results;
+    },
+    cardsPerRow() {
+      return `workspace__row--${this.cards}-cards`;
     }
   },
   mounted() {
@@ -102,7 +98,8 @@ export default {
     }
   },
   props: {
-    sections: Array
+    sections: Array,
+    cards: Number
   }
 };
 </script>
@@ -117,29 +114,33 @@ export default {
 }
 
 .workspace__content {
-  /* display: grid;
-  width: 100%;
-  grid-template-columns: repeat(4, 1fr);
-  align-content: space-around;
-  justify-content: space-between;
-  grid-gap: 10px;
-  color: #444;
-  position: relative; */
-  /* max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  position: relative;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 180px)); */
   display: grid;
   grid-gap: 10px;
+}
+
+.workspace__row--2-cards {
+  grid-template-columns: repeat(2, minmax(100px, auto));
+  grid-template-rows: repeat(2, minmax(100px, auto));
+}
+
+.workspace__row--3-cards {
   grid-template-columns: repeat(3, minmax(100px, auto));
   grid-template-rows: repeat(3, minmax(100px, auto));
 }
 
+.workspace__row--4-cards {
+  grid-template-columns: repeat(4, minmax(100px, auto));
+  grid-template-rows: repeat(4, minmax(100px, auto));
+}
+
+.workspace__row--5-cards {
+  grid-template-columns: repeat(5, minmax(100px, auto));
+  grid-template-rows: repeat(5, minmax(100px, auto));
+}
+/* 
 @media only screen and (min-width: 789px) {
   .workspace__content {
     grid-template-columns: repeat(3, 1fr);
   }
-}
+} */
 </style>

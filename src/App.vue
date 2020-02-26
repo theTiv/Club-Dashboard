@@ -7,6 +7,7 @@
       class="workspace"
       :sections="sections"
       :favourites="favourites"
+      :cards="window.cards"
     />
     <Notifications class="notifications" :notifications="notifications" />
   </div>

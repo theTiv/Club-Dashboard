@@ -14,17 +14,28 @@
     <div class="card__title">{{ cardData.title }}</div>
     <div class="card__description">
       {{ cardData.description }}
+    <styled-button
+      :color="dynColor"
+      :br="dynBr + 'px'"
+      :pad="dynPad + 'px'"
+      :bgc="dynBgc"
+    >I am a dynamically styled button. Change the fields below!</styled-button>
     </div>
   </div>
 </template>
 
 <script>
 import Icon from "../UI/Icons/Icons";
+import { StyledButton } from "../../styled-components/styled-cards";
 
 export default {
   data() {
     return {
-      hover: false
+      hover: false,
+      dynColor: "#ffffff",
+      dynBr: 10,
+      dynPad: 15,
+      dynBgc: "#4ABB00"
     };
   },
   name: "Card",
@@ -41,7 +52,8 @@ export default {
     }
   },
   components: {
-    Icon
+    Icon,
+    StyledButton
   }
 };
 </script>
