@@ -3,7 +3,11 @@
     <header class="header">
       <h2 class="site-title">GAA</h2>
     </header>
-    <Workspace class="workspace" :sections="sections" :favourites="favourites"/>
+    <Workspace
+      class="workspace"
+      :sections="sections"
+      :favourites="favourites"
+    />
     <Notifications class="notifications" :notifications="notifications" />
   </div>
 </template>
@@ -19,13 +23,12 @@ export default {
       sections: this.$root.$data.sections,
       notifications: this.$root.$data.notifications,
       favourites: []
-    }
+    };
   },
   components: {
     Workspace,
     Notifications
-  },
-  
+  }
 };
 </script>
 

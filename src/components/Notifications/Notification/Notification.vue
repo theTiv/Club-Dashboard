@@ -1,38 +1,38 @@
 <template>
-  <div class="notification__container" :class="{ active: notificationData.isMinimized }" >
+  <div class="notification__container" :class="{ active: isMinimized }">
     <div class="notification__details-container">
-        <Date :date="notificationData.date" :time="notificationData.time" />
-        <Close :notificationData="notificationData" />
+      <Date :date="notificationData.date" :time="notificationData.time" />
+      <Close :notificationData="notificationData" :isMinimized="isMinimized" />
     </div>
     <div class="notification__article">
+      {{ notificationData.isMinimized }}
       {{ notificationData.description }}
     </div>
   </div>
 </template>
 
 <script>
-import Date from "../Date/Date"
-import Close from "../../UI/Buttons/Close/Close"
+import Date from "../Date/Date";
+import Close from "../../UI/Buttons/Close/Close";
 
 export default {
   components: {
     Date,
     Close
   },
-  data() {
-    return {
-        isActive: false
-    }
-  },
-    props: {
+  props: {
     notificationData: Object,
     isMinimized: Boolean
   },
-}
+  computed: {
+    isItMinimized() {
+      return this.notificationData.isMinimized ? true : false;
+    }
+  }
+};
 </script>
 
 <style scoped>
-
 .notification__container {
   height: 140px;
   width: 340px;
@@ -43,19 +43,19 @@ export default {
   padding: 16px;
   margin-bottom: 20px;
   overflow: hidden;
-    transition: 0.5s;
+  transition: 0.5s;
 }
 
 .active {
   height: 70px;
   transition: 0.5s;
-  color:rgba(255,255,255, 0.4);
+  color: rgba(255, 255, 255, 0.4);
   background-color: #ccc;
 }
 
 .notification__details-container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .notification__article {
@@ -64,5 +64,4 @@ export default {
   text-align: left;
   margin-top: 16px;
 }
-
 </style>

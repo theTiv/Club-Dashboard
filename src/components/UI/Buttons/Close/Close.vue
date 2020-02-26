@@ -1,33 +1,27 @@
 <template>
-    <div class="close__wrapper">
-      <div class="close__button" :class="{ clicked: minimized }" @click="minimized ? maximize() : minimize()"></div>
-    </div>
+  <div class="close__wrapper">
+    <div
+      class="close__button"
+      :class="{ clicked: isMinimized }"
+      @click="isMinimized ? maximize() : minimize()"
+    ></div>
+  </div>
 </template>
 
 <script>
 import { eventBus } from "../../../../main";
 
 export default {
-  data() {
-    return {
-        isActive: false
-    }
-  },
-  computed: {
-    minimized() {
-      return this.isMinimized;
-    }
-  },
   props: {
     notificationData: Object,
     isMinimized: Boolean
   },
   methods: {
     minimize() {
-      eventBus.$emit("minimized", this.notificationData);
+      eventBus.$emit("minimized", this.notificationData.id);
     },
     maximize() {
-      eventBus.$emit("maximized", this.notificationData);
+      eventBus.$emit("maximized", this.notificationData.id);
     }
   }
 };
@@ -38,7 +32,7 @@ export default {
 @import "../../../../less/mixins.less";
 
 .close__wrapper {
-    position: relative;
+  position: relative;
 }
 
 .close__button {
@@ -51,13 +45,14 @@ export default {
   transition: 0.5s;
 }
 .close__button:hover {
-  opacity: 1; 
+  opacity: 1;
 }
 
-.close__button:before, .close__button:after {
+.close__button:before,
+.close__button:after {
   position: absolute;
   left: 0px;
-  content: ' ';
+  content: " ";
   height: 18px;
   width: 2px;
   background-color: #333;
@@ -72,10 +67,10 @@ export default {
 }
 
 .clicked {
-    &:before, &:after {
+  &:before,
+  &:after {
     transform: rotate(90deg);
     transition: 0.5s;
   }
 }
-
 </style>

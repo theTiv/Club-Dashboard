@@ -3,11 +3,11 @@
     <div class="notifications__title-container">
       <h3 class="notifications__title">Notifications Overview</h3>
     </div>
-    <template v-for="(notification, i) in displayNotifications">
+    <template v-for="(notification, i) in notifications">
       <Notification
         :notificationData="notification"
         :key="i"
-        :minimized="notification.isActive"
+        :isMinimized="isItMinimized(notification.id)"
       />
     </template>
   </aside>
@@ -30,28 +30,6 @@ export default {
   props: {
     notifications: Array
   },
-  computed: {
-    displayNotifications() {
-      let results;
-      if (this.minifiedNotifications) {
-        results = [];
-        this.notifications.forEach(sourceElement => {
-          this.minifiedNotifications.find(targetElement => {
-            if (sourceElement["id"] === targetElement["id"]) {
-              sourceElement.isMinimized = true;
-            }
-            results.push(sourceElement);
-          });
-        });
-      } else {
-        results = this.notifications;
-      }
-
-      console.log('results');
-      console.log(results);
-      return results;
-    }
-  },
   mounted() {
     if (localStorage.getItem("minifiedNotifications")) {
       try {
@@ -65,22 +43,20 @@ export default {
   },
   created() {
     eventBus.$on("minimized", value => {
-      this.minify = value;
-      const matchingValue = this.minifiedNotifications.includes(this.minify);
+      const matchingValue = this.minifiedNotifications.includes(value);
       if (!matchingValue) {
-        this.minifiedNotifications.push(this.minify);
+        this.minifiedNotifications.push(value);
         this.saveNotifications();
-        this.minimized(true);
       }
     });
     eventBus.$on("maximized", value => {
-      for (var i = 0; i < this.minifiedNotifications.length; i++) {
-        if (this.minifiedNotifications[i] === value) {
-          this.minifiedNotifications.splice(i, 1);
-        }
+      const matchingValue = this.minifiedNotifications.includes(value);
+      if (matchingValue) {
+        this.minifiedNotifications = this.minifiedNotifications.filter(
+          item => item !== value
+        );
       }
       this.saveNotifications();
-      this.minimized(false);
     });
   },
   methods: {
@@ -88,8 +64,18 @@ export default {
       let parsed = JSON.stringify(this.minifiedNotifications);
       localStorage.setItem("minifiedNotifications", parsed);
     },
-    minimized(bool) {
-      return bool ? true : false;
+    isItMinimized(id) {
+      let status;
+
+      if (
+        Array.isArray(this.minifiedNotifications) &&
+        this.minifiedNotifications.length
+      ) {
+        status = this.minifiedNotifications.indexOf(id) !== -1 ? true : false;
+      } else {
+        status = false;
+      }
+      return status;
     }
   }
 };
