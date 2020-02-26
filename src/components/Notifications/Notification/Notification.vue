@@ -1,11 +1,11 @@
 <template>
-  <div class="notification__container" :class="{ active: isActive }" >
+  <div class="notification__container" :class="{ active: notificationData.isMinimized }" >
     <div class="notification__details-container">
-        <Date />
-        <Close @NotificationMinimized="isActive = $event"/>
+        <Date :date="notificationData.date" :time="notificationData.time" />
+        <Close :notificationData="notificationData" />
     </div>
     <div class="notification__article">
-      
+      {{ notificationData.description }}
     </div>
   </div>
 </template>
@@ -23,11 +23,15 @@ export default {
     return {
         isActive: false
     }
-  }
+  },
+    props: {
+    notificationData: Object,
+    isMinimized: Boolean
+  },
 }
 </script>
 
-<style>
+<style scoped>
 
 .notification__container {
   height: 140px;

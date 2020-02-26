@@ -1,38 +1,41 @@
 <template>
     <div class="close__wrapper">
-        <div class="close__button" :class="{ clicked: isActive }" @click="toggleClass"></div>
+      <div class="close__button" :class="{ clicked: minimized }" @click="minimized ? maximize() : minimize()"></div>
     </div>
 </template>
 
 <script>
+import { eventBus } from "../../../../main";
+
 export default {
   data() {
     return {
         isActive: false
     }
   },
-  methods: {
-    toggleClass(){
-       this.isActive = !this.isActive
-       this.$emit('NotificationMinimized', this.isActive)
+  computed: {
+    minimized() {
+      return this.isMinimized;
     }
-   } 
+  },
+  props: {
+    notificationData: Object,
+    isMinimized: Boolean
+  },
+  methods: {
+    minimize() {
+      eventBus.$emit("minimized", this.notificationData);
+    },
+    maximize() {
+      eventBus.$emit("maximized", this.notificationData);
+    }
+  }
 };
 </script>
 
 <style scoped lang="less">
 @import "../../../../less/vars.less";
 @import "../../../../less/mixins.less";
-
-/* .close__wrapper {
-    margin-top: -8px;
-}
-
-.close__button:after {
-    content: '\2807';
-    font-size: 24px;
-    color:rgba(0,0,0, 0.4);
-} */
 
 .close__wrapper {
     position: relative;

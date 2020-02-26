@@ -28,7 +28,6 @@
 </template>
 
 <script>
-/* Your JS goes here */
 import Card from "../Card/Card";
 // var results = [];
 
@@ -66,16 +65,16 @@ export default {
         displaySections: function ()  {
           var results = [];
         this.sections.forEach(sourceElement => {
-          console.log(this.favourites)
+          // console.log(this.favourites)
           let targetElement = this.favourites.find(targetElement => {
           return sourceElement['id'] === targetElement['id'];
         })
-           console.log('targetElements')
+          //  console.log('targetElements')
     // console.log(this.favourites)
         targetElement ? '': results.push(sourceElement);
   })
-   console.log('results')
-   console.log(results)
+  //  console.log('results')
+  //  console.log(results)
         return results 
     }
   },
@@ -90,7 +89,7 @@ export default {
   },
   methods: {
     addFav(value) {
-      console.log(value)
+      // console.log(value)
       this.newFav = value;
       const matchingValue = this.favourites.includes(this.newFav);
       if (!matchingValue) {
@@ -136,11 +135,21 @@ export default {
   grid-gap: 10px;
   color: #444;
   position: relative; */
-  max-width: 1200px;
+  /* max-width: 1200px;
   margin: 0 auto;
   display: grid;
   position: relative;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 180px)); */
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, minmax(100px, auto));
+  grid-template-rows: repeat(3, minmax(100px, auto));
+}
+
+@media only screen and (min-width: 789px) {
+  .workspace__content {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>
