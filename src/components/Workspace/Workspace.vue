@@ -10,7 +10,7 @@
             <Card
               :favourite="true"
               :cardData="section"
-              :noCards="cards"              
+              :noCards="cards"
               :key="i"
               @CardFavourited="addFav(section)"
               @CardUnfavourited="removeFav(section)"
@@ -135,5 +135,4 @@ export default {
 .workspace__row--5-cards {
   grid-template-columns: repeat(5, minmax(100px, 180px));
 }
-
 </style>

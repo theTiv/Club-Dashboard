@@ -1,16 +1,14 @@
 @fontSizeStandard: 16;
 
 .rem-px(@property; @sizeValue) {
-
-@pxValue: @sizeValue;
-@remValue: (@sizeValue / @fontSizeStandard);
-@{property}: ~"@{remValue}rem";
-@{property}: ~"@{pxValue}px";
-
+  @pxValue: @sizeValue;
+  @remValue: (@sizeValue / @fontSizeStandard);
+  @{property}: ~"@{remValue}rem";
+  @{property}: ~"@{pxValue}px";
 }
 
 .responsive(@minWidth; @rules) {
-    @media only screen and (min-width: @minWidth) {
-        @rules();
-    }
+  @media only screen and (min-width: @minWidth) {
+    @rules();
+  }
 }

@@ -9,7 +9,10 @@
         :iconHeight="28"
         iconViewBox="0 0 74 28"
       />
-      <div class="header__notifications-container" @click="notificationWindow()">
+      <div
+        class="header__notifications-container"
+        @click="notificationWindow()"
+      >
         <div class="header__notifications">
           <Icon
             name="alarm"
@@ -19,7 +22,7 @@
             iconViewBox="0 0 16 16"
           />
         </div>
-                  <div class="header__notification-counter" v-html="unreadCounter"></div>
+        <div class="header__notification-counter" v-html="unreadCounter"></div>
       </div>
     </header>
     <Workspace
@@ -75,14 +78,14 @@ export default {
   },
   computed: {
     unreadCounter() {
-      let unreadItems = (this.notifications.length - this.minifiedCount)
+      let unreadItems = this.notifications.length - this.minifiedCount;
       return unreadItems;
     }
   },
   mounted() {
     let storedCount = localStorage.getItem("minifiedNotifications");
     this.minifiedCount = JSON.parse(storedCount).length;
-    console.log('this.minifiedCount');
+    console.log("this.minifiedCount");
     console.log(this.minifiedCount);
   },
   methods: {
@@ -161,7 +164,7 @@ body {
 .header__notifications-container {
   display: flex;
   margin-right: 18px;
-    .responsive(768px, {display: none;});
+  .responsive(768px, {display: none;});
 }
 
 .header__notifications {
@@ -171,25 +174,24 @@ body {
   box-sizing: border-box;
   height: 41px;
   width: 41px;
-      margin-top: 4px;
-    margin-right: -14px;
+  margin-top: 4px;
+  margin-right: -14px;
   border: 1px solid #006792;
   align-items: center;
   justify-content: center;
 }
 
-
 .header__notification-counter {
-      width: 24px;
-    height: 24px;
-    position: relative;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    font-size: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .workspace {
