@@ -108,7 +108,7 @@ export default {
 
 <style>
 .workspace__container {
-  margin-left: 50px;
+  margin: 0 32px;
 }
 
 .workspace__title {

@@ -5,7 +5,6 @@
       <Close :notificationData="notificationData" :isMinimized="isMinimized" />
     </div>
     <div class="notification__article">
-      {{ notificationData.isMinimized }}
       {{ notificationData.description }}
     </div>
   </div>
