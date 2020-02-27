@@ -32,10 +32,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
+@import "../../../less/vars.less";
+@import "../../../less/mixins.less";
+
 .notification__container {
   height: 140px;
-  width: 340px;
+  width: 100%;
+    .responsive(768px, {
+        width: 250px;
+    });
+.responsive(992px, {
+        width: 340px;
+    });
   background-color: white;
   border-radius: 12px;
   box-sizing: border-box;

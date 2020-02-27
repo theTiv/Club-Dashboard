@@ -81,17 +81,32 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="less">
+@import "../../less/vars.less";
+@import "../../less/mixins.less"; 
+
 .notifications__container {
-  display: inline-flex;
+width: 100%;
+    position: absolute;
+    top: 0;
+    box-sizing: border-box;
+          .responsive(768px, {
+      display: inline-flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  position: initial;
+    top: initial;
+    right: initial;
+    });
 }
 
 .notifications__title-container {
   text-align: left;
-  width: 340px;
+  width: 250px;
+      .responsive(992px, {
+        width: 340px;
+    });
 }
 
 .notifications__title {

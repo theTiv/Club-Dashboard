@@ -50,25 +50,25 @@ created() {
       let cards;
       switch(true) {
         // Small devices
-        case (width < 576):
+        case (width < 992):
           cards = 2;
         break;
         // Medium devices
-        case (width < 768):
-          // code block
-            cards = 2;
-          break;
-          // Large devices
-        case (width < 992):
+        case (width < 1100):
           // code block
             cards = 3;
           break;
-        // Large devices
-        case (width < 1200):
+          // Large devices
+        case (width < 1400):
+          // code block
             cards = 4;
           break;
+        // Large devices
+        // case (width < 1680):
+        //     cards = 4;
+        //   break;
         // Extra large devices
-        case (width >= 1200):
+        case (width >= 1400):
             cards = 5;
           break;
       }
@@ -78,7 +78,10 @@ created() {
 };
 </script>
 
-<style>
+<style lang="less">
+@import "./less/vars.less";
+@import "./less/mixins.less";
+
 body {
   margin: 0;
 }
@@ -96,26 +99,55 @@ body {
   color: #005e82;
 }
 .workspace {
+  padding-top: 30px;
   grid-area: main;
   background-color: #005e82;
   color: white;
   padding-right: 20px;
+      padding-bottom: 50px;
 }
-.notifications {
+
+.workspace__sections {
+  padding-top: 30px;
+}
+
+aside.notifications {
+  display: none;
+  background-color: #3485ab;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 100vh;
+    .responsive(768px, {
+      display: grid;
   grid-area: sidebar;
   background-color: #3485ab;
   color: white;
   padding-left: 20px;
   padding-right: 20px;
+    });
+
 }
 
 .container {
-  display: grid;
-  height: 100vh;
-  grid-template-columns: 1fr 1fr 1fr;
+display: block;
+width: 100%;
+    .responsive(768px, {
+    display: grid;
+  // height: 100vh;
+      grid-template-columns: 1fr 1fr 300px;
+    });
+    .responsive(840px, {
+        grid-template-columns: 1fr 1fr 1fr;
+    });
   grid-template-rows: auto 1fr;
   grid-template-areas:
-    "header header header"
-    "main main sidebar";
+    "header"
+    "main";
+    .responsive(768px, {
+      grid-template-areas:
+      "header header header"
+      "main main sidebar";
+    });
 }
 </style>

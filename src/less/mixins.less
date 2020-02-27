@@ -9,3 +9,8 @@
 
 }
 
+.responsive(@minWidth; @rules) {
+    @media only screen and (min-width: @minWidth) {
+        @rules();
+    }
+}

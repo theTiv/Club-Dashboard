@@ -10,6 +10,7 @@
             <Card
               :favourite="true"
               :cardData="section"
+              :noCards="cards"              
               :key="i"
               @CardFavourited="addFav(section)"
               @CardUnfavourited="removeFav(section)"
@@ -26,6 +27,7 @@
             <Card
               :favourite="false"
               :cardData="section"
+              :noCards="cards"
               :key="i"
               @CardFavourited="addFav(section)"
               @CardUnfavourited="removeFav(section)"
@@ -119,28 +121,19 @@ export default {
 }
 
 .workspace__row--2-cards {
-  grid-template-columns: repeat(2, minmax(100px, auto));
-  grid-template-rows: repeat(2, minmax(100px, auto));
+  grid-template-columns: repeat(2, minmax(auto, 1fr));
 }
 
 .workspace__row--3-cards {
-  grid-template-columns: repeat(3, minmax(100px, auto));
-  grid-template-rows: repeat(3, minmax(100px, auto));
+  grid-template-columns: repeat(3, minmax(100px, 180px));
 }
 
 .workspace__row--4-cards {
-  grid-template-columns: repeat(4, minmax(100px, auto));
-  grid-template-rows: repeat(4, minmax(100px, auto));
+  grid-template-columns: repeat(4, minmax(100px, 180px));
 }
 
 .workspace__row--5-cards {
-  grid-template-columns: repeat(5, minmax(100px, auto));
-  grid-template-rows: repeat(5, minmax(100px, auto));
+  grid-template-columns: repeat(5, minmax(100px, 180px));
 }
-/* 
-@media only screen and (min-width: 789px) {
-  .workspace__content {
-    grid-template-columns: repeat(3, 1fr);
-  }
-} */
+
 </style>
