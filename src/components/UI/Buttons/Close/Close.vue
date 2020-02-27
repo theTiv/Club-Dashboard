@@ -1,9 +1,15 @@
 <template>
   <div class="close__wrapper">
     <div
+      v-if="actionOn === 'notification'"
       class="close__button"
       :class="{ clicked: isMinimized }"
       @click="isMinimized ? maximize() : minimize()"
+    ></div>
+    <div
+      v-else-if="actionOn === 'overlay'"
+      class="close__button close__button--white"
+      @click="closeOverlay()"
     ></div>
   </div>
 </template>
@@ -14,7 +20,11 @@ import { eventBus } from "../../../../main";
 export default {
   props: {
     notificationData: Object,
-    isMinimized: Boolean
+    isMinimized: Boolean,
+    actionOn: {
+      type: String,
+      required: true
+    }
   },
   methods: {
     minimize() {
@@ -22,6 +32,9 @@ export default {
     },
     maximize() {
       eventBus.$emit("maximized", this.notificationData.id);
+    },
+    closeOverlay() {
+      eventBus.$emit("close-panel", true);
     }
   }
 };
@@ -64,6 +77,14 @@ export default {
 .close__button:after {
   transform: rotate(-45deg);
   transition: 0.5s;
+}
+
+.close__button--white {
+  opacity: 1;
+  &:after,
+  &:before {
+    background-color: white;
+  }
 }
 
 .clicked {

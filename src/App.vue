@@ -9,15 +9,17 @@
         :iconHeight="28"
         iconViewBox="0 0 74 28"
       />
-      <div class="header__notifications">
-        <Icon
-          name="alarm"
-          fill="#006792"
-          :iconWidth="16"
-          :iconHeight="16"
-          iconViewBox="0 0 16 16"
-          @click="notificationWindow()"
-        />
+      <div class="header__notifications-container" @click="notificationWindow()">
+        <div class="header__notifications">
+          <Icon
+            name="alarm"
+            fill="#006792"
+            :iconWidth="16"
+            :iconHeight="16"
+            iconViewBox="0 0 16 16"
+          />
+        </div>
+                  <div class="header__notification-counter" v-html="unreadCounter"></div>
       </div>
     </header>
     <Workspace
@@ -38,6 +40,7 @@
 import Workspace from "./components/Workspace/Workspace";
 import Notifications from "./components/Notifications/Notifications";
 import Icon from "./components/UI/Icons/Icons";
+import { eventBus } from "./main";
 
 export default {
   name: "App",
@@ -47,6 +50,7 @@ export default {
       notifications: this.$root.$data.notifications,
       favourites: [],
       isInactive: true,
+      minifiedCount: String,
       window: {
         width: 0,
         height: 0,
@@ -62,9 +66,24 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    eventBus.$on("close-panel", value => {
+      this.isInactive = value;
+    });
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
+  },
+  computed: {
+    unreadCounter() {
+      let unreadItems = (this.notifications.length - this.minifiedCount)
+      return unreadItems;
+    }
+  },
+  mounted() {
+    let storedCount = localStorage.getItem("minifiedNotifications");
+    this.minifiedCount = JSON.parse(storedCount).length;
+    console.log('this.minifiedCount');
+    console.log(this.minifiedCount);
   },
   methods: {
     handleResize() {
@@ -132,17 +151,45 @@ body {
   height: 68px;
   width: 100%;
   box-sizing: border-box;
-  padding-left: 36px;
+  padding-left: 57px;
 }
 
 .header__logo {
   flex: 1;
 }
 
-.header__notifications {
-  margin-left: auto;
+.header__notifications-container {
+  display: flex;
   margin-right: 18px;
-  width: 16px;
+    .responsive(768px, {display: none;});
+}
+
+.header__notifications {
+  border-radius: 50%;
+  display: inline-flex;
+  margin-left: auto;
+  box-sizing: border-box;
+  height: 41px;
+  width: 41px;
+      margin-top: 4px;
+    margin-right: -14px;
+  border: 1px solid #006792;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.header__notification-counter {
+      width: 24px;
+    height: 24px;
+    position: relative;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .workspace {
@@ -179,12 +226,7 @@ aside.notifications {
 .container {
   display: block;
   width: 100%;
-  .responsive(
-      768px,
-      {display: grid; // height: 100vh;
-        grid-template-columns: 1fr 1fr 300px;}
-    )
-    ;;
+  .responsive(768px, {display: grid; grid-template-columns: 1fr 1fr 300px;});
   .responsive(840px, {grid-template-columns: 1fr 1fr 1fr;});
   grid-template-rows: auto 1fr;
   grid-template-areas:

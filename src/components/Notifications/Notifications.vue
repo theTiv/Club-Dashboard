@@ -2,6 +2,7 @@
   <aside class="notifications__container">
     <div class="notifications__title-container">
       <h3 class="notifications__title">Notifications Overview</h3>
+      <Close actionOn="overlay" />
     </div>
     <template v-for="(notification, i) in notifications">
       <Notification
@@ -15,11 +16,13 @@
 
 <script>
 import Notification from "./Notification/Notification";
+import Close from "../UI/Buttons/Close/Close";
 import { eventBus } from "../../main";
 
 export default {
   components: {
-    Notification
+    Notification,
+    Close
   },
   data() {
     return {
@@ -90,7 +93,7 @@ export default {
   position: absolute;
   top: 0;
   box-sizing: border-box;
-  height: auto;
+  height: 100vh;
   .responsive(
     768px,
     {display: inline-flex; justify-content: flex-start; flex-direction: column; align-items:
@@ -100,8 +103,18 @@ export default {
 
 .notifications__title-container {
   text-align: left;
-  width: 250px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  margin-bottom: 20px;
+  .responsive(768px, {width: 250px;});
   .responsive(992px, {width: 340px;});
+
+  > div {
+    margin-top: 21px;
+  }
 }
 
 .notifications__title {
