@@ -1,5 +1,5 @@
 <template>
-  <div class="notification__container" :class="{ active: isMinimized }">
+  <div class="notification__container" :style="{'background-image':'url(/src/assets/small_blue_shape_bg.png)'}" :class="{ active: isMinimized }">
     <div class="notification__details-container">
       <Date :date="notificationData.date" :time="notificationData.time" />
       <Close
@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import Date from "../Date/Date";
-import Close from "../../UI/Buttons/Close/Close";
+import Date from "@/components/notifications/date/date";
+import Close from "@/components/UI/buttons/close/close";
 
 export default {
   components: {
@@ -52,6 +52,8 @@ export default {
   margin-bottom: 20px;
   overflow: hidden;
   transition: 0.5s;
+  background-position: top right;
+  background-repeat: no-repeat;
 }
 
 .active {
@@ -70,6 +72,6 @@ export default {
   font-size: 14px;
   color: black;
   text-align: left;
-  margin-top: 16px;
+  margin-top: 21px;
 }
 </style>

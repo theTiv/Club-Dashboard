@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container">
+  <div id="app" class="club-dashboard__container">
     <header class="header">
       <Icon
         class="header__logo"
@@ -13,7 +13,7 @@
         class="header__notifications-container"
         @click="notificationWindow()"
       >
-        <div class="header__notifications">
+        <div class="header__notifications" :class="+unreadCounter == 0 ? 'header__notification-no-counter' : ''"> 
           <Icon
             name="alarm"
             fill="#006792"
@@ -22,7 +22,7 @@
             iconViewBox="0 0 16 16"
           />
         </div>
-        <div class="header__notification-counter" v-html="unreadCounter"></div>
+        <div v-if="+unreadCounter > 0" class="header__notification-counter" v-html="unreadCounter"></div>
       </div>
     </header>
     <Workspace
@@ -35,25 +35,28 @@
       class="notifications"
       :class="{ notifications__inactive: isInactive }"
       :notifications="notifications"
+      :width="window.width"
+      :height="window.height"
     />
   </div>
 </template>
 
 <script>
-import Workspace from "./components/Workspace/Workspace";
-import Notifications from "./components/Notifications/Notifications";
-import Icon from "./components/UI/Icons/Icons";
-import { eventBus } from "./main";
+import Workspace from "@/components/workspace/workspace";
+import Notifications from "@/components/notifications/notifications";
+import Icon from "@/components/UI/icons/icons";
+import { eventBus } from "@/main";
+import { store, mutations } from "@/store/store";
 
 export default {
-  name: "App",
+  name: "ClubDashboard",
   data() {
     return {
       sections: this.$root.$data.sections,
       notifications: this.$root.$data.notifications,
       favourites: [],
       isInactive: true,
-      minifiedCount: String,
+      minifiedCount: Number,
       window: {
         width: 0,
         height: 0,
@@ -78,15 +81,26 @@ export default {
   },
   computed: {
     unreadCounter() {
-      let unreadItems = this.notifications.length - this.minifiedCount;
-      return unreadItems;
+      return store.count;
     }
   },
   mounted() {
-    let storedCount = localStorage.getItem("minifiedNotifications");
-    this.minifiedCount = JSON.parse(storedCount).length;
-    console.log("this.minifiedCount");
-    console.log(this.minifiedCount);
+    this.$nextTick(() => {
+      this.window.height = this.$el.clientHeight;
+    })
+
+    if (localStorage.getItem("minifiedNotifications")) {
+      try {
+        let storedCount = localStorage.getItem("minifiedNotifications");
+        this.minifiedCount = JSON.parse(storedCount).length;
+        this.minifiedCount = +this.minifiedCount || 0;
+        let unreadItems = this.notifications.length - this.minifiedCount;
+        this.setCount(unreadItems);
+      } catch (e) {
+        localStorage.removeItem("minifiedNotifications");
+        this.setCount(this.notifications.length);
+      }
+    }
   },
   methods: {
     handleResize() {
@@ -116,37 +130,37 @@ export default {
           break;
       }
       this.window.cards = cards;
-      console.log("GAA: Window Object");
-      console.log(`Width: ${this.window.width}`);
-      console.log(`Height: ${this.window.height}`);
-      console.log(`Cards per row: ${this.window.cards}`);
     },
     notificationWindow() {
       this.isInactive = !this.isInactive;
-    }
+    },
+    setCount: mutations.setCount
   }
-};
+}
 </script>
 
 <style lang="less">
-@import "./less/vars.less";
-@import "./less/mixins.less";
+@import "./less/base.less";
 
 body {
   margin: 0;
 }
 
 #app {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: proxima-nova, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: @base-text;
 }
 
 .header {
   grid-area: header;
-  color: #005e82;
+  background-color: @white;
+  color: @base-text;
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -164,7 +178,7 @@ body {
 .header__notifications-container {
   display: flex;
   margin-right: 18px;
-  .responsive(768px, {display: none;});
+  .responsive(768px, { display: none; });
 }
 
 .header__notifications {
@@ -176,7 +190,7 @@ body {
   width: 41px;
   margin-top: 4px;
   margin-right: -14px;
-  border: 1px solid #006792;
+  border: 1px solid @noticiation-icon-blue;
   align-items: center;
   justify-content: center;
 }
@@ -186,7 +200,7 @@ body {
   height: 24px;
   position: relative;
   background-color: red;
-  color: white;
+  color: @white-text;
   border-radius: 50%;
   font-size: 12px;
   display: flex;
@@ -194,21 +208,20 @@ body {
   align-items: center;
 }
 
+.header__notification-no-counter {
+  margin-right: 30px;
+}
+
 .workspace {
-  padding-top: 30px;
   grid-area: main;
-  background-color: #005e82;
-  color: white;
+  background-color: @workspace-blue-bg;
+  color: @white-text;
   padding-bottom: 50px;
 }
 
-.workspace__sections {
-  padding-top: 30px;
-}
-
 aside.notifications {
-  background-color: #3485ab;
-  color: white;
+  background-color: @notifications-blue-bg;
+  color: @white-text;
   padding-left: 20px;
   padding-right: 20px;
   height: 100vh;
@@ -217,7 +230,7 @@ aside.notifications {
   transition: right 0.5s cubic-bezier(0.82, 0.085, 0.395, 0.895);
   .responsive(
     768px,
-    {display: grid; grid-area: sidebar; background-color: #3485ab; color: white;
+    {display: grid; grid-area: sidebar; background-color: @notifications-blue-bg; color: white;
       padding-left: 20px; padding-right: 20px;}
   );
   &.notifications__inactive {
@@ -225,7 +238,8 @@ aside.notifications {
   }
 }
 
-.container {
+.club-dashboard__container {
+  background-color: @app-bg;
   display: block;
   width: 100%;
   .responsive(768px, {display: grid; grid-template-columns: 1fr 1fr 300px;});

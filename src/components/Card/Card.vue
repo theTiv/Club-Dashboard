@@ -1,25 +1,27 @@
 <template>
-  <div class="card" :class="[`card--${noCards}`]">
+  <div class="card" :class="[`card--${noCards}`]" :style="{'background-image':'url(~@/assets/blue_shape_bg.png)'}">
     <div class="card__favourite">
       <div v-if="favourite" @click="removeFav">
         <Icon name="star-full" fill="#FFC425" />
       </div>
       <div v-else @click="addFav">
-        <Icon name="star-empty" fill="#FFC425" />
+        <Icon name="star-empty" fill="#d0d0d0" />
       </div>
     </div>
-    <div class="card__icon">
-      <Icon :name="cardData.icon" fill="#E55300" />
-    </div>
-    <div class="card__title">{{ cardData.title }}</div>
-    <div class="card__description">
-      {{ cardData.description }}
+    <div class="card__link-wrapper" @click="linkEvent()">
+      <div class="card__icon">
+        <Icon :name="cardData.icon" />
+      </div>
+      <div class="card__title">{{ cardData.title }}</div>
+      <div class="card__description">
+        {{ cardData.description }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Icon from "../UI/Icons/Icons";
+import Icon from "@/components/UI/icons/icons.vue";
 
 export default {
   data() {
@@ -39,6 +41,9 @@ export default {
     },
     removeFav() {
       this.$emit("CardUnfavourited", this.cardData.id);
+    },
+    linkEvent() {
+      this.cardData.newWindow ? window.open(this.cardData.link, '_blank') : window.location.href = this.cardData.link;
     }
   },
   components: {
@@ -52,21 +57,6 @@ export default {
 @import "../../less/vars.less";
 @import "../../less/mixins.less";
 
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-
 .card {
   text-align: left;
   box-sizing: border-box;
@@ -79,11 +69,16 @@ a {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+  background-position: top right;
+  background-repeat: no-repeat;
 }
+
+.responsive(768px, {
 
 .card:hover {
   transition: 0.5s;
   z-index: 2; /*we increase the z-index to cover the other*/
+  
 }
 
 // 2 Card Row ***************************************************************/
@@ -155,14 +150,22 @@ a {
   transition: 1s;
 }
 
+});
+
 .card__favourite {
   align-self: flex-end;
-  margin-bottom: 36px;
+  cursor: pointer;
+  margin-bottom: 20px;
+    .responsive(768px, { margin-bottom: 26px; });
 }
 
 .card__favourite svg {
   height: 24px;
   width: 24px;
+}
+
+.card__link-wrapper {
+  cursor: pointer;
 }
 
 .card__icon {
@@ -174,14 +177,17 @@ a {
   align-self: flex-start;
   margin-bottom: 6px;
   .rem-px(font-size, 16);
+  .responsive(768px, { .rem-px(font-size, 16) });
   font-weight: 600;
   color: rgba(0, 0, 0, 0.6);
 }
 
 .card__description {
   align-self: flex-start;
+  color: rgba(0, 0, 0, 0.6);
   margin-bottom: 12px;
-  font-size: 14px;
+  .rem-px(font-size, 16);
+  font-weight: 600;
   display: none;
 }
 

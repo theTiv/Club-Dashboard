@@ -1,8 +1,11 @@
 <template>
-  <aside class="notifications__container">
-    <div class="notifications__title-container">
-      <h3 class="notifications__title">Notifications Overview</h3>
+  <aside  class="notifications__container" :style="{'height':`${ height }px`}">
+    <div v-if="width < 768" class="notifications__title-container">
+      <h3 class="notifications__title">Notifications</h3>
       <Close actionOn="overlay" />
+    </div>
+    <div v-else class="notifications__title-container">
+      <h3 class="notifications__title">Notifications Overview</h3>
     </div>
     <template v-for="(notification, i) in notifications">
       <Notification
@@ -15,9 +18,9 @@
 </template>
 
 <script>
-import Notification from "./Notification/Notification";
-import Close from "../UI/Buttons/Close/Close";
-import { eventBus } from "../../main";
+import Notification from "@/components/notifications/notification/notification.vue";
+import Close from "@/components/UI/buttons/close/close.vue";
+import { eventBus } from "@/main";
 
 export default {
   components: {
@@ -31,7 +34,9 @@ export default {
     };
   },
   props: {
-    notifications: Array
+    notifications: Array,
+    width: Number,
+    height: Number
   },
   mounted() {
     if (localStorage.getItem("minifiedNotifications")) {
@@ -87,6 +92,7 @@ export default {
 <style scoped lang="less">
 @import "../../less/vars.less";
 @import "../../less/mixins.less";
+@import "../../less/base.less";
 
 .notifications__container {
   width: 100%;
@@ -105,11 +111,10 @@ export default {
   text-align: left;
   width: 100%;
   display: flex;
+  margin-bottom: 28px;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-
-  margin-bottom: 20px;
-  .responsive(768px, {width: 250px;});
+  .responsive(768px, {width: 250px;   border-bottom: none;});
   .responsive(992px, {width: 340px;});
 
   > div {
@@ -117,7 +122,7 @@ export default {
   }
 }
 
-.notifications__title {
+.notifications__title:extend(.section__title) {
   text-align: left;
 }
 </style>

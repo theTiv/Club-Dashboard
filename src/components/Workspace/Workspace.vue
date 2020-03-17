@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="workspace__container">
-      <div class="workspace__favourites">
+      <div v-if="favourites.length > 0" class="workspace__favourites">
         <header class="workspace__header">
           <h2 class="workspace__title">My Favourites</h2>
         </header>
@@ -19,8 +19,8 @@
         </section>
       </div>
       <div class="workspace__sections">
-        <header class="workspace__title">
-          <h2 class="workspace__header">Workspace</h2>
+        <header class="workspace__header">
+          <h2 v-if="displaySections.length > 0" class="workspace__title">Workspace</h2>
         </header>
         <section class="workspace__content" :class="cardsPerRow">
           <template v-for="(section, i) in displaySections">
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import Card from "../Card/Card";
+import Card from "@/components/card/card.vue";
 
 export default {
   components: {
@@ -106,13 +106,21 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+@import "../../less/base.less";
+
 .workspace__container {
   margin: 0 32px;
+  padding-top: 28px;
 }
 
-.workspace__title {
+.workspace__favourites {
+  margin-bottom: 28px;
+}
+
+h2.workspace__title:extend(.section__title) {
   text-align: left;
+  margin-top: 0;
 }
 
 .workspace__content {

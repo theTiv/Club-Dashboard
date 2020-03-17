@@ -1,17 +1,17 @@
 <template>
     <div class="date__wrapper">
-        <div class="date__day-month">{{ date }}</div>
+        <div class="date__day-month">{{ this.date }}</div>
         <div class="date__time">{{ time }}</div>
     </div>
 </template>
 
 <script>
 export default {
-
+  name: "Date",
   props: {
     date: String,
     time: String
-  },
+  }
 }
 </script>
 

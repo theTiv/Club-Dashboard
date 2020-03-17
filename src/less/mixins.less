@@ -12,3 +12,19 @@
     @rules();
   }
 }
+
+/**
+ * font LESS Mixin
+ * use: .font(
+ *   @font-family, // name
+ *   @font-size,   // any unit/inherit
+ *   @font-weight, // light/normal/bold/inherit | 300/400/700
+ *   @font-style   // italic/normal/inherit
+ * )
+ */
+ .font(@font-family, @font-size, @font-weight, @font-style){
+  font-family: @font-family;
+  font-size: @font-size;
+  font-weight: @font-weight;
+  font-style: @font-style;
+}

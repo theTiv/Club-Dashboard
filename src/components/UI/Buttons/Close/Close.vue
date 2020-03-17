@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import { eventBus } from "../../../../main";
+import { eventBus } from "@/main";
+import { store, mutations } from "@/store/store";
 
 export default {
   props: {
@@ -26,16 +27,24 @@ export default {
       required: true
     }
   },
+  computed: {
+    count() {
+      return store.count;
+    }
+  },
   methods: {
     minimize() {
       eventBus.$emit("minimized", this.notificationData.id);
+      this.setCount(this.count - 1);
     },
     maximize() {
       eventBus.$emit("maximized", this.notificationData.id);
+      this.setCount(this.count + 1);
     },
     closeOverlay() {
       eventBus.$emit("close-panel", true);
-    }
+    },
+    setCount: mutations.setCount
   }
 };
 </script>
@@ -46,6 +55,7 @@ export default {
 
 .close__wrapper {
   position: relative;
+  cursor: pointer;
 }
 
 .close__button {
